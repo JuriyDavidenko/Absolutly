@@ -90,6 +90,11 @@ namespace Absolutly
             int num;
             return (int.TryParse(s, out num) ? num : 0);
         }
+
+        public static long ToLong(this string s)
+        {
+            return (long.TryParse(s, out var num) ? num : 0);
+        }
     }
 }
 
