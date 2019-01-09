@@ -11,24 +11,27 @@ namespace Absolutly
 
         public void FileOpen(string path)
         {
-
-            var workbook = new XLWorkbook(path);
-            var ws1 = workbook.Worksheet(1);
-
-            foreach (var xlRow in ws1.RangeUsed().Rows())
+            lock (this)
             {
-                Rows.Add(new List<string>());
+                var workbook = new XLWorkbook(path);
+                var ws1 = workbook.Worksheet(1);
 
-                foreach (var xlCell in xlRow.Cells())
+                foreach (var xlRow in ws1.RangeUsed().Rows())
                 {
-                    var formula = xlCell.FormulaA1;
-                    var value = xlCell.Value.ToString();
+                    Rows.Add(new List<string>());
 
-                    string targetCellValue = (formula.Length == 0) ? value : "=" + formula;
+                    foreach (var xlCell in xlRow.Cells())
+                    {
+                        var formula = xlCell.FormulaA1;
+                        var value = xlCell.Value.ToString();
 
-                    Rows[Rows.Count - 1].Add(targetCellValue);
+                        string targetCellValue = (formula.Length == 0) ? value : "=" + formula;
+
+                        Rows[Rows.Count - 1].Add(targetCellValue);
+                    }
                 }
-            }
+            }           
+            
         }
 
         public void FileSave(string path)

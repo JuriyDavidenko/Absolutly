@@ -73,7 +73,7 @@ namespace Absolutly
             new Regex(re).Match(s).Success;
 
         public static bool IsUrl(this string s) => 
-            new Regex(@"^https?//\S+$", RegexOptions.IgnoreCase).Match(s).Success;
+            new Regex(@"^https?://\S+$", RegexOptions.IgnoreCase).Match(s).Success;
 
         public static string JoinBy(this string[] s, string separator) => 
             string.Join(separator, s);
